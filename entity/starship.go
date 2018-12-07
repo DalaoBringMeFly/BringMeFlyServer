@@ -1,5 +1,7 @@
 package entity
 
+import "github.com/graphql-go/graphql"
+
 type Starship struct {
 	Name                 string   `json:"name"`
 	Model                string   `json:"model"`
@@ -20,3 +22,9 @@ type Starship struct {
 	Edited               string   `json:"edited"`
 	URL                  string   `json:"url"`
 }
+
+var (
+	starshipType      *graphql.Object
+	starshipQueryType *graphql.Object
+	StarshipSchema    graphql.Schema
+)

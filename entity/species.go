@@ -1,5 +1,7 @@
 package entity
 
+import "github.com/graphql-go/graphql"
+
 type Species struct {
 	Name            string   `json:"name"`
 	Classification  string   `json:"classification"`
@@ -17,3 +19,9 @@ type Species struct {
 	Edited          string   `json:"edited"`
 	URL             string   `json:"url"`
 }
+
+var (
+	speciesType      *graphql.Object
+	speciesQueryType *graphql.Object
+	SpeciesSchema    graphql.Schema
+)

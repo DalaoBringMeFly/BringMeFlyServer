@@ -1,5 +1,7 @@
 package entity
 
+import "github.com/graphql-go/graphql"
+
 type Vehicle struct {
 	Name                 string   `json:"name"`
 	Model                string   `json:"model"`
@@ -18,3 +20,9 @@ type Vehicle struct {
 	Edited               string   `json:"edited"`
 	URL                  string   `json:"url"`
 }
+
+var (
+	vehicleType      *graphql.Object
+	vehicleQueryType *graphql.Object
+	VehicleSchema    graphql.Schema
+)

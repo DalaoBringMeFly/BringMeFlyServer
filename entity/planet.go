@@ -1,5 +1,7 @@
 package entity
 
+import "github.com/graphql-go/graphql"
+
 type Planet struct {
 	Name           string   `json:"name"`
 	RotationPeriod string   `json:"rotation_period"`
@@ -16,3 +18,9 @@ type Planet struct {
 	Edited         string   `json:"edited"`
 	URL            string   `json:"url"`
 }
+
+var (
+	planetType      *graphql.Object
+	planetQueryType *graphql.Object
+	PlanetSchema    graphql.Schema
+)
