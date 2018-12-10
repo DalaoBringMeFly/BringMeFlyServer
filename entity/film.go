@@ -37,7 +37,7 @@ func init() {
 	filmQueryType = graphql.NewObject(graphql.ObjectConfig{
 		Name: "Query",
 		Fields: graphql.Fields{
-			"persons": &graphql.Field{
+			"film": &graphql.Field{
 				Type: personType,
 				Args: graphql.FieldConfigArgument{
 					"id": &graphql.ArgumentConfig{
@@ -47,7 +47,7 @@ func init() {
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 					idQuery, isOK := p.Args["id"].(string)
 					if isOK {
-						return GetPerson(p.Args["id"].(int)), nil
+						return GetFilm(p.Args["id"].(int)), nil
 					}
 					err := errors.New("Field 'persons' is missing required arguments: id. ")
 					return nil, err
@@ -61,9 +61,9 @@ func init() {
 	})
 }
 
-func GetPerson(id int) Person {
-	if person, ok := PersonData[id]; ok {
-		return person
+func GetFilm(id int) Person {
+	if film, ok := FilmData[id]; ok {
+		return film
 	}
-	return Person{}
+	return Film{}
 }
