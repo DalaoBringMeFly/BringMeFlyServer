@@ -2,28 +2,24 @@ package entity
 
 import (
 	"errors"
+	"log"
 
+	"github.com/boltdb/bolt"
 	"github.com/graphql-go/graphql"
 )
 
 type Person struct {
-	Id           string   `json:"id"`
-	Name         string   `json:"name"`
-	Height       string   `json:"height"`
-	Mass         string   `json:"mass"`
-	HairColor    string   `json:"hair_color"`
-	SkinColor    string   `json:"skin_color"`
-	EyeColor     string   `json:"eye_color"`
-	BirthYear    string   `json:"birth_year"`
-	Gender       string   `json:"gender"`
-	Homeworld    string   `json:"homeworld"`
-	FilmURLs     []string `json:"films"`
-	SpeciesURLs  []string `json:"species"`
-	VehicleURLs  []string `json:"vehicles"`
-	StarshipURLs []string `json:"starships"`
-	Created      string   `json:"created"`
-	Edited       string   `json:"edited"`
-	URL          string   `json:"url"`
+	Name      string `json:"name"`
+	Height    string `json:"height"`
+	Mass      string `json:"mass"`
+	HairColor string `json:"hair_color"`
+	SkinColor string `json:"skin_color"`
+	EyeColor  string `json:"eye_color"`
+	BirthYear string `json:"birth_year"`
+	Gender    string `json:"gender"`
+	Homeworld string `json:"homeworld"`
+	Created   string `json:"created"`
+	Edited    string `json:"edited"`
 }
 
 var (
@@ -36,9 +32,6 @@ func init() {
 	personType = graphql.NewObject(graphql.ObjectConfig{
 		Name: "Person",
 		Fields: graphql.Fields{
-			"id": &graphql.Field{
-				Type: graphql.String,
-			},
 			"name": &graphql.Field{
 				Type: graphql.String,
 			},
@@ -66,25 +59,10 @@ func init() {
 			"homeworld": &graphql.Field{
 				Type: graphql.String,
 			},
-			"films": &graphql.Field{
-				Type: graphql.String,
-			},
-			"species": &graphql.Field{
-				Type: graphql.NewList(graphql.String),
-			},
-			"vehicles": &graphql.Field{
-				Type: graphql.NewList(graphql.String),
-			},
-			"starships": &graphql.Field{
-				Type: graphql.NewList(graphql.String),
-			},
 			"created": &graphql.Field{
 				Type: graphql.String,
 			},
 			"edited": &graphql.Field{
-				Type: graphql.String,
-			},
-			"url": &graphql.Field{
 				Type: graphql.String,
 			},
 		},
@@ -103,7 +81,7 @@ func init() {
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 					idQuery, isOK := p.Args["id"].(string)
 					if isOK {
-						return GetPerson(p.Args["id"].(int)), nil
+						return GetPerson(idQuery), nil
 					}
 					err := errors.New("Field 'persons' is missing required arguments: id. ")
 					return nil, err
@@ -117,9 +95,27 @@ func init() {
 	})
 }
 
-func GetPerson(id int) Person {
-	if person, ok := PersonData[id]; ok {
-		return person
+func GetPerson(id string) Person {
+
+	person := Person{}
+
+	db, err := bolt.Open("swapi.db", 0600, nil)
+	if err != nil {
+		log.Fatal(err)
 	}
-	return Person{}
+	defer db.Close()
+
+	var f []byte = nil
+
+	db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte("peoples"))
+		f = b.Get([]byte(id))
+		return nil
+	})
+
+	if f != nil {
+
+	}
+
+	return person
 }

@@ -1,25 +1,23 @@
 package main
 
-import(
-	//"fmt"
-	"github.com/boltdb/bolt"
+import (
 	"encoding/json"
+
+	"github.com/boltdb/bolt"
 
 	"io/ioutil"
 )
-func main(){
-	//fmt.Println(_films[0]["model"])
-	//fmt.Printf("yest")
-	
 
-	db,_ := bolt.Open("swapi.db",0600,nil)
+func main() {
+
+	db, _ := bolt.Open("swapi.db", 0600, nil)
 	defer db.Close()
 	b,_ := ioutil.ReadFile("./fixtures/films.json")
 	_films  :=   [6] map[string]interface{}{}
 	json.Unmarshal(b,&_films)
 	db.Update(func(tx *bolt.Tx) error {
-		bu,err := tx.CreateBucketIfNotExists([]byte("films"))
-		if err!=nil{
+		bu, err := tx.CreateBucketIfNotExists([]byte("films"))
+		if err != nil {
 			return err
 		}
 
@@ -36,8 +34,8 @@ func main(){
 	_peoples  :=   [82] map[string]interface{}{}
 	json.Unmarshal(b,&_films)
 	db.Update(func(tx *bolt.Tx) error {
-		bu,err := tx.CreateBucketIfNotExists([]byte("peoples"))
-		if err!=nil{
+		bu, err := tx.CreateBucketIfNotExists([]byte("peoples"))
+		if err != nil {
 			return err
 		}
 
@@ -52,8 +50,8 @@ func main(){
 	_planets  :=   [60] map[string]interface{}{}
 	json.Unmarshal(b,&_planets)
 	db.Update(func(tx *bolt.Tx) error {
-		bu,err := tx.CreateBucketIfNotExists([]byte("planets"))
-		if err!=nil{
+		bu, err := tx.CreateBucketIfNotExists([]byte("planets"))
+		if err != nil {
 			return err
 		}
 
@@ -71,8 +69,8 @@ func main(){
 	_species  :=   [37] map[string]interface{}{}
 	json.Unmarshal(b,&_species)
 	db.Update(func(tx *bolt.Tx) error {
-		bu,err := tx.CreateBucketIfNotExists([]byte("species"))
-		if err!=nil{
+		bu, err := tx.CreateBucketIfNotExists([]byte("species"))
+		if err != nil {
 			return err
 		}
 
@@ -87,8 +85,8 @@ func main(){
 	_starships  :=   [36] map[string]interface{}{}
 	json.Unmarshal(b,&_starships)
 	db.Update(func(tx *bolt.Tx) error {
-		bu,err := tx.CreateBucketIfNotExists([]byte("starships"))
-		if err!=nil{
+		bu, err := tx.CreateBucketIfNotExists([]byte("starships"))
+		if err != nil {
 			return err
 		}
 
@@ -103,8 +101,8 @@ func main(){
 	_transports :=   [75] map[string]interface{}{}
 	json.Unmarshal(b,&_transports)
 	db.Update(func(tx *bolt.Tx) error {
-		bu,err := tx.CreateBucketIfNotExists([]byte("transports"))
-		if err!=nil{
+		bu, err := tx.CreateBucketIfNotExists([]byte("transports"))
+		if err != nil {
 			return err
 		}
 
@@ -119,8 +117,8 @@ func main(){
 	_vehicles  :=   [39] map[string]interface{}{}
 	json.Unmarshal(b,&_vehicles)
 	db.Update(func(tx *bolt.Tx) error {
-		bu,err := tx.CreateBucketIfNotExists([]byte("vehicles"))
-		if err!=nil{
+		bu, err := tx.CreateBucketIfNotExists([]byte("vehicles"))
+		if err != nil {
 			return err
 		}
 

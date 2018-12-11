@@ -2,24 +2,26 @@ package entity
 
 import (
 	"errors"
+	"log"
 
+	"github.com/boltdb/bolt"
 	"github.com/graphql-go/graphql"
 )
 
 type Film struct {
-	Title         string   `json:"title"`
-	EpisodeID     int      `json:"episode_id"`
-	OpeningCrawl  string   `json:"opening_crawl"`
-	Director      string   `json:"director"`
-	Producer      string   `json:"producer"`
-	CharacterURLs []string `json:"characters"`
-	PlanetURLs    []string `json:"planets"`
-	StarshipURLs  []string `json:"starships"`
-	VehicleURLs   []string `json:"vehicles"`
-	SpeciesURLs   []string `json:"species"`
-	Created       string   `json:"created"`
-	Edited        string   `json:"edited"`
-	URL           string   `json:"url"`
+	Producer      string `json:"producer"`
+	Title         string `json:"title"`
+	EpisodeID     int    `json:"episode_id"`
+	OpeningCrawl  string `json:"opening_crawl"`
+	Director      string `json:"director"`
+	CharacterURLs []int  `json:"characters"`
+	PlanetURLs    []int  `json:"planets"`
+	StarshipURLs  []int  `json:"starships"`
+	VehicleURLs   []int  `json:"vehicles"`
+	SpeciesURLs   []int  `json:"species"`
+	Created       string `json:"created"`
+	Edited        string `json:"edited"`
+	ReleaseData   string `json:"release_date"`
 }
 
 var (
@@ -47,9 +49,10 @@ func init() {
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 					idQuery, isOK := p.Args["id"].(string)
 					if isOK {
-						return GetFilm(p.Args["id"].(int)), nil
+						return GetFilm(idQuery), nil
 					}
 					err := errors.New("Field 'persons' is missing required arguments: id. ")
+
 					return nil, err
 				},
 			},
@@ -59,11 +62,30 @@ func init() {
 	FilmSchema, _ = graphql.NewSchema(graphql.SchemaConfig{
 		Query: filmQueryType,
 	})
+
 }
 
-func GetFilm(id int) Person {
-	if film, ok := FilmData[id]; ok {
-		return film
+func GetFilm(id string) Film {
+
+	film := Film{}
+
+	db, err := bolt.Open("swapi.db", 0600, nil)
+	if err != nil {
+		log.Fatal(err)
 	}
-	return Film{}
+	defer db.Close()
+
+	var f []byte = nil
+
+	db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte("films"))
+		f = b.Get([]byte(id))
+		return nil
+	})
+
+	if f != nil {
+
+	}
+
+	return film
 }
