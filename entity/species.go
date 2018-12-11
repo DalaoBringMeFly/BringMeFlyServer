@@ -23,3 +23,7 @@ var (
 	speciesQueryType *graphql.Object
 	SpeciesSchema    graphql.Schema
 )
+
+func init() {
+
+}

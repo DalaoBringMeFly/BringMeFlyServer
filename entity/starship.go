@@ -14,3 +14,7 @@ var (
 	starshipQueryType *graphql.Object
 	StarshipSchema    graphql.Schema
 )
+
+func init() {
+
+}
