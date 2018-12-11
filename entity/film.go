@@ -32,8 +32,48 @@ var (
 
 func init() {
 	filmType = graphql.NewObject(graphql.ObjectConfig{
-		Name:   "Film",
-		Fields: graphql.Fields{},
+		Name: "Film",
+		Fields: graphql.Fields{
+			"producer": &graphql.Field{
+				Type: graphql.String,
+			},
+			"title": &graphql.Field{
+				Type: graphql.String,
+			},
+			"episode_id": &graphql.Field{
+				Type: graphql.Int,
+			},
+			"opening_crawl": &graphql.Field{
+				Type: graphql.String,
+			},
+			"director": &graphql.Field{
+				Type: graphql.String,
+			},
+			"characters": &graphql.Field{
+				Type: graphql.NewList(graphql.Int),
+			},
+			"planets": &graphql.Field{
+				Type: graphql.NewList(graphql.Int),
+			},
+			"starships": &graphql.Field{
+				Type: graphql.NewList(graphql.Int),
+			},
+			"vehicles": &graphql.Field{
+				Type: graphql.NewList(graphql.Int),
+			},
+			"species": &graphql.Field{
+				Type: graphql.NewList(graphql.Int),
+			},
+			"created": &graphql.Field{
+				Type: graphql.String,
+			},
+			"edited": &graphql.Field{
+				Type: graphql.String,
+			},
+			"release_date": &graphql.Field{
+				Type: graphql.String,
+			},
+		},
 	})
 
 	filmQueryType = graphql.NewObject(graphql.ObjectConfig{
@@ -52,7 +92,6 @@ func init() {
 						return GetFilm(idQuery), nil
 					}
 					err := errors.New("Field 'persons' is missing required arguments: id. ")
-
 					return nil, err
 				},
 			},

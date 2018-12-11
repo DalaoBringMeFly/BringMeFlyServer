@@ -21,3 +21,7 @@ var (
 	planetQueryType *graphql.Object
 	PlanetSchema    graphql.Schema
 )
+
+func init() {
+
+}
