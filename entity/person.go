@@ -2,7 +2,9 @@ package entity
 
 import (
 	"errors"
+	"log"
 
+	"github.com/boltdb/bolt"
 	"github.com/graphql-go/graphql"
 )
 
@@ -57,25 +59,10 @@ func init() {
 			"homeworld": &graphql.Field{
 				Type: graphql.String,
 			},
-			"films": &graphql.Field{
-				Type: graphql.String,
-			},
-			"species": &graphql.Field{
-				Type: graphql.NewList(graphql.String),
-			},
-			"vehicles": &graphql.Field{
-				Type: graphql.NewList(graphql.String),
-			},
-			"starships": &graphql.Field{
-				Type: graphql.NewList(graphql.String),
-			},
 			"created": &graphql.Field{
 				Type: graphql.String,
 			},
 			"edited": &graphql.Field{
-				Type: graphql.String,
-			},
-			"url": &graphql.Field{
 				Type: graphql.String,
 			},
 		},
@@ -92,10 +79,10 @@ func init() {
 					},
 				},
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-					/*idQuery, isOK := p.Args["id"].(string)
+					idQuery, isOK := p.Args["id"].(string)
 					if isOK {
-						return GetPerson(p.Args["id"].(int)), nil
-					}*/
+						return GetPerson(idQuery), nil
+					}
 					err := errors.New("Field 'persons' is missing required arguments: id. ")
 					return nil, err
 				},
@@ -108,6 +95,27 @@ func init() {
 	})
 }
 
-func GetPerson(id int) Person {
-	return Person{}
+func GetPerson(id string) Person {
+
+	person := Person{}
+
+	db, err := bolt.Open("swapi.db", 0600, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	var f []byte = nil
+
+	db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket([]byte("peoples"))
+		f = b.Get([]byte(id))
+		return nil
+	})
+
+	if f != nil {
+
+	}
+
+	return person
 }
