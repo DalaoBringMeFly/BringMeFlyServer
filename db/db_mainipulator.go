@@ -1,10 +1,9 @@
 package db
-
 import(
 	"fmt"
 	"github.com/boltdb/bolt"
 	"strings"
-	//"encoding/json"
+	"encoding/json"
 )
 
 func Search_by_kind_and_id(db *bolt.DB,kind string,id int)string{
@@ -63,4 +62,21 @@ func Example(){
 
 	s := Search_by_keyword(db ,"Skywalker")
 	fmt.Println(s)
+}
+
+func Unmarshal_fields(s string)string{
+	var _json map[string]interface{}
+	json.Unmarshal([]byte(s),&_json)
+	//fmt.Println(_json)
+	temp,_ := json.Marshal(_json["fields"])
+	//fmt.Println(temp)
+	return string(temp)
+	//return value
+}
+
+func test(){
+	db,_ := bolt.Open("swapi.db",0600,nil)
+	s := Search_by_kind_and_id(db,"films",1)
+	//fmt.Println(s)
+	fmt.Println(Unmarshal_fields(string(s)))
 }
