@@ -27,7 +27,6 @@ type Film struct {
 var (
 	filmType      *graphql.Object
 	filmQueryType *graphql.Object
-	FilmSchema    graphql.Schema
 )
 
 func init() {

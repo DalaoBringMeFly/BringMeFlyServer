@@ -8,7 +8,6 @@ import (
 
 	"github.com/boltdb/bolt"
 	"github.com/graphql-go/graphql"
-	"github.com/graphql-go/graphql/testutil"
 )
 
 func main() {
@@ -22,15 +21,13 @@ func main() {
 	http.HandleFunc("/graphql", func(w http.ResponseWriter, r *http.Request) {
 		query := r.URL.Query().Get("query")
 		result := graphql.Do(graphql.Params{
-			Schema:        testutil.StarWarsSchema,
+			Schema:        entity.StarWarsSchema,
 			RequestString: query,
 		})
 		json.NewEncoder(w).Encode(result)
 	})
 
 	fmt.Println("Now server is running on port 8080")
-
-	fmt.Println("Test with Get      : curl -g 'http://localhost:8080/graphql?query={hero{name}}'")
-
+	fmt.Println("Test with Get      : curl -g 'http://localhost:8080/graphql?query={film(id:1){title}}'")
 	http.ListenAndServe(":8080", nil)
 }

@@ -25,7 +25,6 @@ type Person struct {
 var (
 	personType      *graphql.Object
 	personQueryType *graphql.Object
-	PersonSchema    graphql.Schema
 )
 
 func init() {
@@ -66,10 +65,6 @@ func init() {
 				Type: graphql.String,
 			},
 		},
-	})
-
-	PersonSchema, _ = graphql.NewSchema(graphql.SchemaConfig{
-		Query: personQueryType,
 	})
 }
 
