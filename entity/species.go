@@ -1,6 +1,12 @@
 package entity
 
-import "github.com/graphql-go/graphql"
+import (
+	"BringMeFlyServer/database"
+	"encoding/json"
+	"fmt"
+
+	"github.com/graphql-go/graphql"
+)
 
 type Species struct {
 	Name            string `json:"name"`
@@ -26,4 +32,18 @@ var (
 
 func init() {
 
+}
+
+func GetSpecies(id int) Species {
+
+	var species Species
+
+	jsonSpecies := database.Search_by_kind_and_id(db, "species", id)
+
+	err := json.Unmarshal([]byte(database.Unmarshal_fields(jsonSpecies)), &species)
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+
+	return species
 }

@@ -1,6 +1,12 @@
 package entity
 
-import "github.com/graphql-go/graphql"
+import (
+	"BringMeFlyServer/database"
+	"encoding/json"
+	"fmt"
+
+	"github.com/graphql-go/graphql"
+)
 
 type Starship struct {
 	HyperdriveRating string `json:"hyperdrive_rating"`
@@ -17,4 +23,18 @@ var (
 
 func init() {
 
+}
+
+func GetStarship(id int) Starship {
+
+	var starship Starship
+
+	jsonStarship := database.Search_by_kind_and_id(db, "starships", id)
+
+	err := json.Unmarshal([]byte(database.Unmarshal_fields(jsonStarship)), &starship)
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+
+	return starship
 }
