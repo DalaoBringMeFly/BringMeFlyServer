@@ -22,7 +22,23 @@ var (
 )
 
 func init() {
-
+	starshipType = graphql.NewObject(graphql.ObjectConfig{
+		Name: "StarShip",
+		Fields: graphql.Fields{
+			"hyperdrive_rating": &graphql.Field{
+				Type: graphql.String,
+			},
+			"MGLT": &graphql.Field{
+				Type: graphql.String,
+			},
+			"starship_class": &graphql.Field{
+				Type: graphql.String,
+			},
+			"pilots": &graphql.Field{
+				Type: graphql.NewList(graphql.Int),
+			},
+		},
+	})
 }
 
 func GetStarship(id int) Starship {

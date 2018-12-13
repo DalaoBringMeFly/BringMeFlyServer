@@ -20,7 +20,17 @@ var (
 )
 
 func init() {
-
+	vehicleType = graphql.NewObject(graphql.ObjectConfig{
+		Name: "Vehicle",
+		Fields: graphql.Fields{
+			"vehicle_class": &graphql.Field{
+				Type: graphql.String,
+			},
+			"pilots": &graphql.Field{
+				Type: graphql.NewList(graphql.Int),
+			},
+		},
+	})
 }
 
 func GetVehicle(id int) Vehicle {

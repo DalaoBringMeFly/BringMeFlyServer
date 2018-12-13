@@ -31,7 +31,50 @@ var (
 )
 
 func init() {
-
+	speciesType = graphql.NewObject(graphql.ObjectConfig{
+		Name: "Species",
+		Fields: graphql.Fields{
+			"name": &graphql.Field{
+				Type: graphql.String,
+			},
+			"classification": &graphql.Field{
+				Type: graphql.String,
+			},
+			"designation": &graphql.Field{
+				Type: graphql.String,
+			},
+			"average_height": &graphql.Field{
+				Type: graphql.String,
+			},
+			"skin_colors": &graphql.Field{
+				Type: graphql.String,
+			},
+			"hair_colors": &graphql.Field{
+				Type: graphql.String,
+			},
+			"eye_colors": &graphql.Field{
+				Type: graphql.String,
+			},
+			"average_lifespan": &graphql.Field{
+				Type: graphql.String,
+			},
+			"homeworld": &graphql.Field{
+				Type: graphql.String,
+			},
+			"language": &graphql.Field{
+				Type: graphql.String,
+			},
+			"people": &graphql.Field{
+				Type: graphql.NewList(graphql.Int),
+			},
+			"created": &graphql.Field{
+				Type: graphql.String,
+			},
+			"edited": &graphql.Field{
+				Type: graphql.String,
+			},
+		},
+	})
 }
 
 func GetSpecies(id int) Species {

@@ -29,7 +29,44 @@ var (
 )
 
 func init() {
-
+	planetType = graphql.NewObject(graphql.ObjectConfig{
+		Name: "Planet",
+		Fields: graphql.Fields{
+			"name": &graphql.Field{
+				Type: graphql.String,
+			},
+			"rotation_period": &graphql.Field{
+				Type: graphql.String,
+			},
+			"orbital_period": &graphql.Field{
+				Type: graphql.String,
+			},
+			"diameter": &graphql.Field{
+				Type: graphql.String,
+			},
+			"climate": &graphql.Field{
+				Type: graphql.String,
+			},
+			"gravity": &graphql.Field{
+				Type: graphql.String,
+			},
+			"terrain": &graphql.Field{
+				Type: graphql.String,
+			},
+			"surface_water": &graphql.Field{
+				Type: graphql.String,
+			},
+			"population": &graphql.Field{
+				Type: graphql.String,
+			},
+			"created": &graphql.Field{
+				Type: graphql.String,
+			},
+			"edited": &graphql.Field{
+				Type: graphql.String,
+			},
+		},
+	})
 }
 
 func GetPlanet(id int) Planet {
