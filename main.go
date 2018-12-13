@@ -27,7 +27,7 @@ func main() {
 		json.NewEncoder(w).Encode(result)
 	})
 
-	fmt.Println("Now server is running on port 8080")
-	fmt.Println("Test with Get      : curl -g 'http://localhost:8080/graphql?query={film(id:1){title}}'")
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("Now server is running on port 5656")
+	fmt.Println("Test with Get      : curl -g 'http://localhost:5656/graphql?query={film(id:1){title}}'")
+	http.ListenAndServe(":5656", nil)
 }
