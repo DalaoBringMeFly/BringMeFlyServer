@@ -16,7 +16,6 @@ type Vehicle struct {
 var (
 	vehicleType      *graphql.Object
 	vehicleQueryType *graphql.Object
-	VehicleSchema    graphql.Schema
 )
 
 func init() {

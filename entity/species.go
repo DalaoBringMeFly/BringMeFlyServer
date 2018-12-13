@@ -27,7 +27,6 @@ type Species struct {
 var (
 	speciesType      *graphql.Object
 	speciesQueryType *graphql.Object
-	SpeciesSchema    graphql.Schema
 )
 
 func init() {

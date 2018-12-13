@@ -25,7 +25,6 @@ type Planet struct {
 var (
 	planetType      *graphql.Object
 	planetQueryType *graphql.Object
-	PlanetSchema    graphql.Schema
 )
 
 func init() {

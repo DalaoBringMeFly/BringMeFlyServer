@@ -18,7 +18,6 @@ type Starship struct {
 var (
 	starshipType      *graphql.Object
 	starshipQueryType *graphql.Object
-	StarshipSchema    graphql.Schema
 )
 
 func init() {
