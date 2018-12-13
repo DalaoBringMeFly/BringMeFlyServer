@@ -17,15 +17,10 @@ type Person struct {
 	EyeColor  string `json:"eye_color"`
 	BirthYear string `json:"birth_year"`
 	Gender    string `json:"gender"`
-	Homeworld string `json:"homeworld"`
+	Homeworld int    `json:"homeworld"`
 	Created   string `json:"created"`
 	Edited    string `json:"edited"`
 }
-
-var (
-	personType      *graphql.Object
-	personQueryType *graphql.Object
-)
 
 func init() {
 	personType = graphql.NewObject(graphql.ObjectConfig{
@@ -56,7 +51,7 @@ func init() {
 				Type: graphql.String,
 			},
 			"homeworld": &graphql.Field{
-				Type: graphql.String,
+				Type: graphql.Int,
 			},
 			"created": &graphql.Field{
 				Type: graphql.String,
@@ -75,6 +70,7 @@ func GetPerson(id int) Person {
 	jsonPerson := database.Search_by_kind_and_id(db, "peoples", id)
 
 	err := json.Unmarshal([]byte(database.Unmarshal_fields(jsonPerson)), &person)
+
 	if err != nil {
 		fmt.Println("error:", err)
 	}

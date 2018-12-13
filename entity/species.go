@@ -17,17 +17,12 @@ type Species struct {
 	HairColors      string `json:"hair_colors"`
 	EyeColors       string `json:"eye_colors"`
 	AverageLifespan string `json:"average_lifespan"`
-	Homeworld       string `json:"homeworld"`
+	Homeworld       int    `json:"homeworld"`
 	Language        string `json:"language"`
 	PeopleURLs      []int  `json:"people"`
 	Created         string `json:"created"`
 	Edited          string `json:"edited"`
 }
-
-var (
-	speciesType      *graphql.Object
-	speciesQueryType *graphql.Object
-)
 
 func init() {
 	speciesType = graphql.NewObject(graphql.ObjectConfig{
@@ -58,7 +53,7 @@ func init() {
 				Type: graphql.String,
 			},
 			"homeworld": &graphql.Field{
-				Type: graphql.String,
+				Type: graphql.Int,
 			},
 			"language": &graphql.Field{
 				Type: graphql.String,

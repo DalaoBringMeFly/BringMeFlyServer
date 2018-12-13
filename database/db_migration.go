@@ -2,6 +2,7 @@ package database
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/boltdb/bolt"
 
@@ -30,7 +31,7 @@ func main() {
 
 	b, _ = ioutil.ReadFile("./fixtures/people.json")
 	_peoples := [82]map[string]interface{}{}
-	json.Unmarshal(b, &_films)
+	json.Unmarshal(b, &_peoples)
 	db.Update(func(tx *bolt.Tx) error {
 		bu, err := tx.CreateBucketIfNotExists([]byte("peoples"))
 		if err != nil {
@@ -39,6 +40,7 @@ func main() {
 
 		for i := 0; i < 82; i++ {
 			_value, _ := json.Marshal(_peoples[i])
+			fmt.Println(string(_value))
 			bu.Put([]byte(string(i)), []byte(string(_value)))
 		}
 		return nil

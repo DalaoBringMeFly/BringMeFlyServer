@@ -24,11 +24,6 @@ type Film struct {
 	ReleaseData   string `json:"release_date"`
 }
 
-var (
-	filmType      *graphql.Object
-	filmQueryType *graphql.Object
-)
-
 func init() {
 	filmType = graphql.NewObject(graphql.ObjectConfig{
 		Name: "Film",

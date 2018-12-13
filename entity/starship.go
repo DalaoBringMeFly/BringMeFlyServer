@@ -15,11 +15,6 @@ type Starship struct {
 	PilotURLs        []int  `json:"pilots"`
 }
 
-var (
-	starshipType      *graphql.Object
-	starshipQueryType *graphql.Object
-)
-
 func init() {
 	starshipType = graphql.NewObject(graphql.ObjectConfig{
 		Name: "StarShip",

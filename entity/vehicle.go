@@ -13,11 +13,6 @@ type Vehicle struct {
 	PilotURLs    []int  `json:"pilots"`
 }
 
-var (
-	vehicleType      *graphql.Object
-	vehicleQueryType *graphql.Object
-)
-
 func init() {
 	vehicleType = graphql.NewObject(graphql.ObjectConfig{
 		Name: "Vehicle",

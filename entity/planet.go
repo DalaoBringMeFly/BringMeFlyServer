@@ -22,11 +22,6 @@ type Planet struct {
 	Edited         string `json:"edited"`
 }
 
-var (
-	planetType      *graphql.Object
-	planetQueryType *graphql.Object
-)
-
 func init() {
 	planetType = graphql.NewObject(graphql.ObjectConfig{
 		Name: "Planet",
