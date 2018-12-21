@@ -1,21 +1,24 @@
 package main
 
 import (
+	"BringMeFlyServer/database_mysql"
 	"BringMeFlyServer/entity"
 	"encoding/json"
 	"fmt"
 	"net/http"
 
-	"github.com/boltdb/bolt"
 	"github.com/graphql-go/graphql"
 )
 
 func main() {
-	db, err := bolt.Open("./database/swapi.db", 0600, nil)
-	if err != nil {
-		fmt.Println("error:", err)
-	}
-	defer db.Close()
+	/*
+		db, err := bolt.Open("./database/swapi.db", 0600, nil)
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+		defer db.Close()
+	*/
+	db := database_mysql.OpenDatabase("swapi")
 	entity.InitDataBase(db)
 
 	http.HandleFunc("/graphql", func(w http.ResponseWriter, r *http.Request) {

@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"BringMeFlyServer/database"
+	"BringMeFlyServer/database_mysql"
 	"encoding/json"
 	"fmt"
 
@@ -75,9 +75,9 @@ func GetSpecies(id int) Species {
 
 	var species Species
 
-	jsonSpecies := database.Search_by_kind_and_id(db, "species", id)
+	jsonSpecies := database_mysql.Search_by_kind_and_id(db, "species", id)
 
-	err := json.Unmarshal([]byte(database.Unmarshal_fields(jsonSpecies)), &species)
+	err := json.Unmarshal([]byte(database_mysql.Unmarshal_fields(jsonSpecies)), &species)
 	if err != nil {
 		fmt.Println("error:", err)
 	}

@@ -1,15 +1,15 @@
 package entity
 
 import (
+	"database/sql"
 	"errors"
 	"fmt"
 
-	"github.com/boltdb/bolt"
 	"github.com/graphql-go/graphql"
 )
 
 var (
-	db             *bolt.DB
+	db             *sql.DB
 	StarWarsSchema graphql.Schema
 	filmType       *graphql.Object
 	vehicleType    *graphql.Object
@@ -19,7 +19,7 @@ var (
 	starshipType   *graphql.Object
 )
 
-func InitDataBase(mdb *bolt.DB) {
+func InitDataBase(mdb *sql.DB) {
 	db = mdb
 }
 

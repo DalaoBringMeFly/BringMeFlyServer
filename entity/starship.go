@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"BringMeFlyServer/database"
+	"BringMeFlyServer/database_mysql"
 	"encoding/json"
 	"fmt"
 
@@ -39,9 +39,9 @@ func GetStarship(id int) Starship {
 
 	var starship Starship
 
-	jsonStarship := database.Search_by_kind_and_id(db, "starships", id)
+	jsonStarship := database_mysql.Search_by_kind_and_id(db, "starships", id)
 
-	err := json.Unmarshal([]byte(database.Unmarshal_fields(jsonStarship)), &starship)
+	err := json.Unmarshal([]byte(database_mysql.Unmarshal_fields(jsonStarship)), &starship)
 	if err != nil {
 		fmt.Println("error:", err)
 	}
