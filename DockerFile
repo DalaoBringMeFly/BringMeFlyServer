@@ -1,0 +1,29 @@
+FROM centos:7
+
+MAINTAINER dalaobringmefly <hongzc@mail2.sysu.edu.cn>
+
+RUN yum install -y gcc
+
+RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+RUN yum install golang -y
+
+ENV GOROOT /usr/lib/golang
+ENV PATH=$PATH:/usr/lib/golang/bin
+
+RUN mkdir -p /root/gopath
+RUN mkdir -p /root/gopath/src
+RUN mkdir -p /root/gopath/pkg
+RUN mkdir -p /root/gopath/bin
+ENV GOPATH /root/gopath
+
+RUN go get github.com/boltdb/bolt
+RUN go get github.com/graphql-go/graphql
+
+RUN mkdir -p /root/gopath/src/BringMeFlyServer/
+COPY BringMeFlyServer/ /root/gopath/src/BringMeFlyServer/
+
+WORKDIR /root/gopath/src/BringMeFlyServer
+RUN go build -o server.bin main.go
+
+CMD /root/gopath/src/BringMeFlyServer/server.bin
