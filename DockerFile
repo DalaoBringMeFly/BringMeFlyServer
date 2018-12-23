@@ -19,9 +19,10 @@ ENV GOPATH /root/gopath
 
 RUN go get github.com/boltdb/bolt
 RUN go get github.com/graphql-go/graphql
+RUN go get -u github.com/go-sql-driver/mysql
 
 RUN mkdir -p /root/gopath/src/BringMeFlyServer/
-COPY BringMeFlyServer/ /root/gopath/src/BringMeFlyServer/
+COPY . /root/gopath/src/BringMeFlyServer/
 
 WORKDIR /root/gopath/src/BringMeFlyServer
 RUN go build -o server.bin main.go
